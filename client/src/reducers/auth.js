@@ -26,6 +26,7 @@ export default function (state = initialState, action) {
     switch (type) {
         case USER_LOADING:
             return {
+                ...state,
                 isloading: true
             }
 
