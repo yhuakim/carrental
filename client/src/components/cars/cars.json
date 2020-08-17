@@ -1,0 +1,64 @@
+{
+    "cars": [
+        {
+            "title": "Mitsubishi Pajero",
+            "price": "389",
+            "luggage": "8",
+            "doors": "4",
+            "passenger": "4",
+            "img": "/images/car_1.jpg",
+            "description": "Mitsubishi Pajero, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos eos at eum, voluptatem quibusdam",
+            "id": "MitsubishiPajero"
+        },
+        {
+            "title": "Buick LaCrosse",
+            "price": "389",
+            "luggage": "8",
+            "doors": "4",
+            "passenger": "4",
+            "img": "/images/car_6.jpg",
+            "description": "Buick LaCrosse, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos eos at eum, voluptatem quibusdam",
+            "id": "BuickLaCrosse"
+        },
+        {
+            "title": "Mazda LaPuta",
+            "price": "389",
+            "luggage": "8",
+            "doors": "4",
+            "passenger": "4",
+            "img": "/images/car_5.jpg",
+            "description": "Mazda LaPuta, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos eos at eum, voluptatem quibusdam",
+            "id": "MazdaLaPuta"
+        },
+        {
+            "title": "Skonda Laura",
+            "price": "389",
+            "luggage": "8",
+            "doors": "4",
+            "passenger": "4",
+            "img": "/images/car_4.jpg",
+            "description": "Skonda Laura, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos eos at eum, voluptatem quibusdam",
+            "id": "Skonda Laura"
+        },
+        {
+            "title": "Honda Fitta",
+            "price": "389",
+            "luggage": "8",
+            "doors": "4",
+            "passenger": "4",
+            "img": "/images/car_3.jpg",
+            "description": "Honda Fitta, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos eos at eum, voluptatem quibusdam",
+            "id": "HondaFitta"
+        },
+        {
+            "title": "Nissan Mocco",
+            "price": "389",
+            "luggage": "8",
+            "doors": "4",
+            "passenger": "4",
+            "img": "/images/car_2.jpg",
+            "description": "Nissan Mocco, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos eos at eum, voluptatem quibusdam",
+            "id": "NissanMoco"
+        }
+    ]
+}
