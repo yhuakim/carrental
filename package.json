@@ -1,0 +1,38 @@
+{
+  "name": "jiliscarrentals",
+  "version": "1.0.0",
+  "description": "A fullstack car-rental web App with flutter wave payment integration",
+  "main": "server.js",
+  "engines": {
+    "node": "12.18.0"
+  },
+  "scripts": {
+    "start": "node server",
+    "server": "nodemon server",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"yarn run server\" \"yarn run client\"",
+    "heroku-postbuild": "cd client && npm install && yarn run build" 
+  },
+  "author": "Jilis",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "config": "^3.3.1",
+    "express": "^4.17.1",
+    "express-validator": "^6.6.1",
+    "flutterwave-node": "^1.2.0",
+    "flutterwave-node-v3": "^1.0.0",
+    "gravatar": "^1.8.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.27",
+    "node-forge": "^0.9.1",
+    "open": "^7.1.0",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0",
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.4"
+  }
+}
