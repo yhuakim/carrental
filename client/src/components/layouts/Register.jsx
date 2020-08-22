@@ -6,7 +6,6 @@ import Alert from './Alert'
 import PropTypes from 'prop-types'
 import { NavLink, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input } from 'reactstrap'
 import { Redirect } from 'react-router-dom'
-import contains from 'validator/lib/contains'
 
 const Register = ({ setAlert, register, isAuthenticated }) => {
 	const [
@@ -20,14 +19,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 		phone: '',
 		address: '',
 	})
-	const [
-		Role,
-		setRole,
-	] = useState({
-		role: 'user',
-	})
-
-	const { role } = Role
 
 	const [
 		modal,
@@ -45,22 +36,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 		})
 	}
 
-	useEffect(
-		() => {
-			if (contains(email, 'admin-') && contains(password, 'admin-')) {
-				setRole({
-					...Role,
-					role: 'admin',
-				})
-			}
-		},
-		[
-			email,
-			password,
-			role,
-		]
-	)
-
 	const onSubmit = (e) => {
 		e.preventDefault()
 
@@ -68,7 +43,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 			setAlert('Password do not match', 'danger')
 		}
 
-		register({ name, email, password, phone, address, role })
+		register({ name, email, password, phone, address })
 
 		if (isAuthenticated) {
 			setModal(!modal)

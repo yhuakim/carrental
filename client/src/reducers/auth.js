@@ -11,7 +11,6 @@ import {
 
 const initialState = {
     token: localStorage.getItem('token'),
-    token_admin: localStorage.getItem('token_admin'),
     isAuthenticated: null,
     isloading: true,
     user: null
@@ -26,6 +25,7 @@ export default function (state = initialState, action) {
     switch (type) {
         case USER_LOADING:
             return {
+                ...state,
                 isloading: true
             }
 
@@ -40,7 +40,6 @@ export default function (state = initialState, action) {
                 case REGISTERATION_SUCCESS:
                 case LOGIN_SUCCESS:
                     localStorage.setItem('token', payload.token);
-                    localStorage.setItem('token_admin', payload.token_admin);
                     return {
                         ...state,
                         ...payload,
@@ -50,14 +49,12 @@ export default function (state = initialState, action) {
 
                     case REGISTERATION_FAIL:
                     case LOGIN_FAILED:
-                        /* case AUTH_ERROR: */
+                    case AUTH_ERROR:
                     case LOGOUT:
                         localStorage.removeItem('token');
-                        localStorage.removeItem('token_admin');
                         return {
                             ...state,
                             token: null,
-                                token_admin: null,
                                 isAuthenticated: false,
                                 isloading: false,
                                 user: null

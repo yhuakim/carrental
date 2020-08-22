@@ -21,8 +21,6 @@ import { setAlert } from './actions/alert'
 
 if (localStorage.token) {
 	setAuthToken(localStorage.token)
-} else if (localStorage.token_admin) {
-	setAuthToken(localStorage.token_admin)
 } else {
 	setAlert('An error occured', 'danger')
 }
@@ -44,6 +42,8 @@ const App = () => {
 					<Route path='/cars' component={CarList} exact />
 					<Route path='/cars/:id' component={CarDetails} exact />
 					<Route path='/cars/rent/:id' component={Checkout} exact />
+
+					<Route path='/transfer' component={Transfer} exact />
 				</Switch>
 			</Router>
 		</Provider>

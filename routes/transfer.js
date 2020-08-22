@@ -26,7 +26,7 @@ router.post('/new', async (req, res) => {
             });
         }
 
-        data = new Transfer({
+        transfer = new Transfer({
             bank_code,
             account_number,
             amount,
@@ -81,6 +81,10 @@ router.delete('/delete/:id', async (req, res) => {
             msg: 'Server Error'
         })
     }
+})
+
+router.delete('/delete', async (req, res) => {
+    await Transfer.deleteMany();
 })
 
 module.exports = router;

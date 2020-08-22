@@ -19,8 +19,7 @@ export const register = ({
     email,
     password,
     phone,
-    address,
-    role
+    address
 }) => async dispatch => {
     const config = {
         headers: {
@@ -33,11 +32,8 @@ export const register = ({
         email,
         password,
         phone,
-        address,
-        role
+        address
     });
-
-    console.log(body)
 
     try {
         const res = await axios.post('/user/register', body, config);
@@ -111,16 +107,18 @@ export const loadUser = () => async (dispatch) => {
     });
 
     if (localStorage.token) {
-        setAuthToken(localStorage.token, null)
-
-    } else if (localStorage.token_admin) {
-        setAuthToken(null, localStorage.token_admin)
+        setAuthToken(localStorage.token)
     } else {
         setAlert('No token', 'danger')
     }
 
     try {
-
+        /* let config = {
+            headers: {
+                "Content-Type": "application/json",
+                "x-auth-token": `${localStorage.token}`
+            }
+        } */
         const res = await axios.get('/auth/user');
         dispatch({
             type: USER_LOADED,

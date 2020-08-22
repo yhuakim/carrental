@@ -12,16 +12,20 @@ const Admin = require('../models/Admin');
 
 //get and authenticate user
 router.get('/user', auth, async (req, res) => {
+    console.log(req.user)
     try {
-        let admin = await Admin.findOne(req.body._id).select(['-password', '-phone']);
+        if (req.user.role === 'admin') {
+            let admin = await Admin.findById(req.user.id).select(['-password', '-phone']);
+            if (admin) {
+                return res.json(admin)
+            }
 
-        let user = await User.findOne(req.body._id).select(['-password', '-phone', '-address']);
+            console.log(admin)
+        }
 
-        console.log(admin)
+        let user = await User.findById(req.user.id).select(['-password', '-phone', '-address']);
 
-        if (admin) {
-            return res.json(admin)
-        } else if (user) {
+        if (user) {
             res.json(user)
         }
 
@@ -94,7 +98,9 @@ router.post(
                     });
                 });
 
-            } else if (admin) {
+            }
+
+            if (admin) {
                 const isMatch = await bcrypt.compare(password, admin.password);
 
                 if (!isMatch) {
@@ -106,18 +112,19 @@ router.post(
                 }
 
                 const payload = {
-                    admin: {
-                        id: admin.id
+                    user: {
+                        id: admin.id,
+                        role: admin.role
                     }
                 }
 
                 //jsonwebtoken hookup
-                jwt.sign(payload, process.env.JWT_SECRET_ADMIN, {
+                jwt.sign(payload, process.env.JWT_SECRET, {
                     expiresIn: 360000
-                }, (err, token_admin) => {
+                }, (err, token) => {
                     if (err) throw err;
                     res.json({
-                        token_admin
+                        token
                     });
                 });
             }
@@ -129,6 +136,14 @@ router.post(
         }
     }
 );
+
+router.delete('/delete', async (req, res) => {
+    try {
+        await Admin.remove()
+    } catch (error) {
+        console.error(error);
+    }
+})
 
 
 module.exports = router

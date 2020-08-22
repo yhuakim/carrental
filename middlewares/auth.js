@@ -4,10 +4,8 @@ module.exports = function (req, res, next) {
     //get token from header
     const token = req.header('x-auth-token');
 
-    const token_admin = req.header('x-auth-token-admin');
-
     //check if no token
-    if (!token && !token_admin) {
+    if (!token) {
         return res.status(401).json({
             msg: 'No token, authorization denied'
         })
@@ -20,16 +18,9 @@ module.exports = function (req, res, next) {
 
             req.user = decoded.user;
 
-            next()
-
-        }
-        /* else if (token_admin) {
-            const decoded_admin = jwt.verify(token_admin, process.env.JWT_SECRET_ADMIN);
-
-            req.admin = decoded_admin.admin;
-
             next();
-        } */
+        }
+
     } catch (error) {
         res.status(401).json({
             msg: 'Token invalid'

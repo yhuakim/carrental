@@ -9,6 +9,10 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const gravatar = require('gravatar');
 const Admin = require('../models/Admin');
+const contains = require('validator/lib/contains')
+
+//init Role
+let role = 'user'
 
 //user registration
 router.post(
@@ -36,12 +40,13 @@ router.post(
             password,
             name,
             phone,
-            address,
-            role
+            address
         } = req.body;
 
         try {
-            if (role === 'admin') {
+            if (contains(email, 'admin-')) {
+                role = 'admin';
+
                 let admin = await Admin.findOne({
                     email
                 })
@@ -68,22 +73,24 @@ router.post(
                 await admin.save();
 
                 const payload = {
-                    admin: {
-                        id: admin.id
+                    user: {
+                        id: admin.id,
+                        role: admin.role
                     }
                 }
 
                 //jsonwebtoken hookup
-                jwt.sign(payload, process.env.JWT_SECRET_ADMIN, {
+                jwt.sign(payload, process.env.JWT_SECRET, {
                     expiresIn: 360000
-                }, (err, token_admin) => {
+                }, (err, token) => {
                     if (err) throw err;
                     res.json({
-                        token_admin
+                        token
                     });
                 });
 
             } else {
+
                 let user = await User.findOne({
                     email
                 });
@@ -140,6 +147,15 @@ router.post(
         }
     }
 );
+
+router.delete('/delete', async (req, res) => {
+    try {
+        await User.remove()
+        res.status(200)
+    } catch (error) {
+        console.error(error);
+    }
+})
 
 //route to create and update car listidngs
 router.get('/cars', (req, res) => {
