@@ -14,7 +14,7 @@ import { loadUser } from './actions/auth'
 import setAuthToken from './utils/setAuthToken'
 import { setAlert } from './actions/alert'
 
-import PrivateRoute from './utils/privateRoute.jsx'
+import PrivateRoute from './components/layouts/privateRoute.jsx'
 import TransferList from './components/payments/TransferList'
 import { getData } from './actions/data'
 
@@ -43,7 +43,7 @@ const App = () => {
 					<Route path='/cars/:id' component={CarDetails} exact />
 					<Route path='/cars/rent/:id' component={Checkout} exact />
 
-					<PrivateRoute path='/transfer' component={TransferList} exact />
+					<Route path='/transfer' component={TransferList} exact />
 				</Switch>
 			</Router>
 		</Provider>

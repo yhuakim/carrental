@@ -62,9 +62,9 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 
 	return (
 		<Fragment>
-			<NavLink color='danger' onClick={toggle}>
+			<p className="btn btn-outline-primary"  onClick={toggle}>
 				Register
-			</NavLink>
+			</p>
 			<Modal isOpen={modal} toggle={toggle} centered>
 				<ModalHeader toggle={toggle}>Register</ModalHeader>
 				<Alert>

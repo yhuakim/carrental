@@ -25,12 +25,12 @@ const NavBar = ({ isAuthenticated, logout, userRole, isloading }) => {
 				<NavbarToggler onClick={toggle} />
 				<Collapse isOpen={isOpen} navbar>
 					<Nav className='mr-auto' navbar>
-						<NavItem>
+						<NavItem className="m-1">
 							{
 								isAuthenticated ? null :
 								<Register />}
 						</NavItem>
-						<NavItem>
+						<NavItem className="m-1">
 							{
 								isAuthenticated ? null :
 								<Login />}

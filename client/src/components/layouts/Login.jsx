@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom';
 import { login } from '../../actions/auth';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Register from './Register';
 
 const Login = ({ login, isAuthenticated }) => {
 	const [ loginData, setLoginData ] = useState({
@@ -39,7 +40,7 @@ const Login = ({ login, isAuthenticated }) => {
 
 	return (
 		<Fragment>
-			<NavLink onClick={toggle}>Login</NavLink>
+			<p className="btn btn-outline-primary" onClick={toggle}>Login</p>
 			<Modal isOpen={modal} centered toggle={toggle}>
 				<ModalHeader toggle={toggle}>Login</ModalHeader>
 				<Alert>
@@ -63,11 +64,12 @@ const Login = ({ login, isAuthenticated }) => {
 							className='mb-4 form-control-lg'
 							onChange={handleChange}
 						/>
+					<p>Don't have an account? <Register/> </p>
 					</Form>
 				</ModalBody>
 				<ModalFooter>
 					<Button color='primary' onClick={onSubmit}>
-						Enter
+						Login
 					</Button>
 				</ModalFooter>
 			</Modal>

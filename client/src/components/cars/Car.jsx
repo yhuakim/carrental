@@ -1,12 +1,14 @@
 import React from 'react';
-import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button, Container, Col, Row } from 'reactstrap';
+import Login from '../layouts/Login'
+import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Container, Col, Row, NavLink, Alert } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import {connect} from 'react-redux'
+import PropTypes from 'prop-types'
 
-const Car = ({ state }) => {
-	/* const handleRent = (e) => {
-		let clickedId = e.target.id;
-		console.log(clickedId);
-	}; */
+const Car = ({ state, auth: {
+	isAuthenticated,
+	isloading
+} }) => {
 
 	return state.map((car) => (
 		<Container key={car.id} className='mb-3'>
@@ -45,12 +47,17 @@ const Car = ({ state }) => {
 								<br />
 								<span className=''>{car.description}</span>
 							</CardText>
+							<div className="d-inline">
 							<Link className='btn btn-outline-info mr-4' color='primary' to={`/cars/${car.id}`}>
 								View
 							</Link>
-							<Link className='btn btn-primary' color='primary' to={`/cars/rent/${car.id}`}>
+							
+							{
+								isAuthenticated? <Link className='btn btn-primary' color='primary' to={`/cars/rent/${car.id}`}>
 								Rent Now
-							</Link>
+							</Link> : <Alert color="info" >Rent Now? <Login className="btn btn-info" /> </Alert>
+							}
+							</div>
 						</CardBody>
 					</Card>
 				</Col>
@@ -59,4 +66,11 @@ const Car = ({ state }) => {
 	));
 };
 
-export default Car;
+Car.propTypes = {
+    auth: PropTypes.object.isRequired
+}
+const mapStateToProps = (state) => ({
+    auth: state.auth
+})
+
+export default connect(mapStateToProps)(Car);

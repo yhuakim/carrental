@@ -24,9 +24,11 @@ const PrivateRoute = ({
 
    return ( 
     <Route
-    {...others}
     render = {
-        (props) => isAuthenticated && user.role === 'admin' ? <Component {...props} /> : <Redirect to='/cars' /> 
+        (props) => !isloading &&
+        isAuthenticated &&
+        user !== null &&
+        user.role === 'admin' ? <Component {...props} /> : <Redirect to='/cars' /> 
     }
     />
    )  
