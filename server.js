@@ -1,15 +1,10 @@
 const express = require('express');
-const dotenv = require('dotenv');
 const userRoute = require('./routes/user');
 const authRoute = require('./routes/auth');
 const transferRoute = require('./routes/transfer')
 const connectDB = require('./config/db')
 
 const app = express();
-
-dotenv.config({
-    path: './config/config.env'
-})
 
 connectDB();
 
