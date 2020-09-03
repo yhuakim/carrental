@@ -20,7 +20,7 @@ router.get('/user', auth, async (req, res) => {
                 return res.json(admin)
             }
 
-            console.log(admin)
+            console.log(res.json(admin))
         }
 
         let user = await User.findById(req.user.id).select(['-password', '-phone', '-address']);
@@ -84,7 +84,8 @@ router.post(
 
                 const payload = {
                     user: {
-                        id: user.id
+                        id: user.id,
+                        role: user.role
                     }
                 }
 

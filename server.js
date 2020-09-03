@@ -1,6 +1,5 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const adminRoute = require('./routes/admin');
 const userRoute = require('./routes/user');
 const authRoute = require('./routes/auth');
 const transferRoute = require('./routes/transfer')
@@ -18,7 +17,6 @@ app.use(express.json({
     extended: false
 }))
 
-app.use('/admin', adminRoute);
 app.use('/user', userRoute);
 app.use('/auth', authRoute);
 app.use('/transfer', transferRoute);

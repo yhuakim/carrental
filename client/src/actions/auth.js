@@ -113,12 +113,6 @@ export const loadUser = () => async (dispatch) => {
     }
 
     try {
-        /* let config = {
-            headers: {
-                "Content-Type": "application/json",
-                "x-auth-token": `${localStorage.token}`
-            }
-        } */
         const res = await axios.get('/auth/user');
         dispatch({
             type: USER_LOADED,

@@ -1,61 +1,77 @@
-import React, { Fragment } from 'react';
-import { connect } from 'react-redux';
-import { setAlert } from '../../actions/alert';
-import { deleteData } from '../../actions/removeItem';
-import PropTypes from 'prop-types';
+import React, { Fragment, useEffect } from 'react'
+import Transfer from './Transfer'
+import { connect } from 'react-redux'
+import { setAlert } from '../../actions/alert'
+import { deleteData, queueData } from '../../actions/data'
+import PropTypes from 'prop-types'
+import { Button, Table } from 'reactstrap'
 
-const TransferList = ({ datas, deleteData }) => {
-	const handleDelete = (e) => {
-		const id = e.target.id;
-		console.log(datas)
+const TransferList = ({ datas, deleteData, success, queueData }) => {
+	const handleDelete = (event) => {
+		let id = event.target.id
+		console.log(id)
+		deleteData(id)
+	}
+	console.log(datas)
 
-		deleteData(id);
-	};
-	/* let bulkData = Object.keys(data); */
-	console.log(datas);
-	if (datas !== null)
-		return datas.map((d) => (
-			<Fragment>
-				<div className='container' key={d.id}>
-					<div className='bankcode'>
-						<span>Bank Code</span>
-						{d.bank_code}
-					</div>
-					<div className='bankcode'>
-						<span>Account Number</span>
-						{d.account_number}
-					</div>
-					<div className='bankcode'>
-						<span>Amount</span>
-						{d.amount}
-					</div>
-					<div className='bankcode'>
-						<span>Currency</span>
-						{d.currency}
-					</div>
-					<div className='bankcode'>
-						<span>Narration</span>
-						{d.narration}
-					</div>
-					<div className='bankcode'>
-						<span>Reference</span>
-						{d.reference}
-					</div>
-					<button id={d.id} onClick={(e) =>handleDelete}>
-						X
-					</button>
-				</div>
-			</Fragment>
-		));
-};
+	const handleQueue = () => {
+		queueData(datas)
+	}
+
+	return (
+		<Fragment>
+			<div className='container-fluid mt-5 p-5 bg-white'>
+				<Transfer />
+				<Table striped>
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Bank Code</th>
+							<th>Account Number</th>
+							<th>Amount</th>
+							<th>Currency</th>
+							<th>Narration</th>
+							<th>Reference</th>
+						</tr>
+					</thead>
+					{
+						datas && success ? datas.map((data, index) => (
+							<tbody key={data._id}>
+								<tr>
+									<th scope='row'>{index + 1}</th>
+									<td>{data.bank_code}</td>
+									<td>{data.account_number}</td>
+									<td>{data.amount}</td>
+									<td>{data.currency}</td>
+									<td>{data.narration}</td>
+									<td>{data.reference}</td>
+									<td>
+										<Button id={data._id} onClick={handleDelete} color='danger'>
+											{' '}
+											&times;{' '}
+										</Button>
+									</td>
+								</tr>
+							</tbody>
+						)) :
+						console.log('error')}
+				</Table>
+				<Button onClick={handleQueue}>QUEUE</Button>
+			</div>
+		</Fragment>
+	)
+}
 
 TransferList.propTypes = {
-	datas: PropTypes.object.isRequired,
-	deleteData: PropTypes.func.isRequired
-};
+	datas: PropTypes.array,
+	deleteData: PropTypes.func,
+	queueData: PropTypes.func,
+	success: PropTypes.bool,
+}
 
 const mapStateToProps = (state) => ({
-	datas: state.data
-});
+	datas: state.data.data,
+	success: state.data.success,
+})
 
-export default connect(mapStateToProps, { setAlert, deleteData })(TransferList);
+export default connect(mapStateToProps, { setAlert, deleteData, queueData })(TransferList)

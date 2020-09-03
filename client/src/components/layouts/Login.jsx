@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { NavLink, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input } from 'reactstrap';
+import Alert from './Alert'
 import '../../Login.css';
 import { Redirect } from 'react-router-dom';
 import { login } from '../../actions/auth';
@@ -41,6 +42,9 @@ const Login = ({ login, isAuthenticated }) => {
 			<NavLink onClick={toggle}>Login</NavLink>
 			<Modal isOpen={modal} centered toggle={toggle}>
 				<ModalHeader toggle={toggle}>Login</ModalHeader>
+				<Alert>
+					<Alert />
+				</Alert>
 				<ModalBody>
 					<Form>
 						<Input

@@ -35,8 +35,8 @@ router.post('/new', async (req, res) => {
             reference
         });
 
-        await data.save();
-        console.log(data)
+        await transfer.save();
+        console.log(transfer)
 
         res.status(200).json({
             success: true,

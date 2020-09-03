@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import axios from 'axios';
 import { Container } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import SEC_KEY from '../../config';
+import {SEC_KEY} from '../../config';
 import { setAlert } from '../../actions/alert';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';

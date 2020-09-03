@@ -1,70 +1,69 @@
-import React, { Fragment, useState } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, NavLink } from 'reactstrap';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { addData } from '../../actions/transfer';
-import { getData } from '../../actions/data';
-import { setAlert } from '../../actions/alert';
-import PropTypes from 'prop-types';
-import axios from 'axios';
-import SEC_KEY from '../../config';
-import TransferList from './TransferList';
+import React, { Fragment, useState } from 'react'
+import { Input, Form, Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap'
+import { connect } from 'react-redux'
+import { addData } from '../../actions/data'
+import { getData } from '../../actions/data'
+import { setAlert } from '../../actions/alert'
+import PropTypes from 'prop-types'
 
-const Transfer = ({ setAlert, addData, getData, buttonLabel, className }) => {
-	const [ transferData, setTransferData ] = useState({
+const Transfer = ({ setAlert, addData, getData }) => {
+	const [
+		transferData,
+		setTransferData,
+	] = useState({
 		bank_code: '',
 		account_number: '',
 		amount: '',
 		currency: '',
 		narration: '',
-		reference: '',
-		title: ''
-	});
+		reference: `${Date.now()}`,
+	})
 
-	const [ modal, setModal ] = useState(false);
+	const { bank_code, account_number, amount, currency, narration, reference } = transferData
 
-	const toggle = () => setModal(!modal);
+	const [
+		modal,
+		setModal,
+	] = useState(false)
 
-	const { bank_code, account_number, amount, currency, narration, reference, title } = transferData;
+	const toggle = () => setModal(!modal)
 
 	const handleChange = (e) => {
 		setTransferData({
 			...transferData,
-			[e.target.name]: e.target.value
-		});
-	};
+			[e.target.name]: e.target.value,
+		})
+	}
 
 	const onSubmit = (e) => {
-		e.preventDefault();
+		e.preventDefault()
 
 		if (account_number === null) {
-			setAlert('account number is required', 'danger');
-		} else {
-			addData({
-				bank_code,
-				account_number,
-				amount,
-				currency,
-				narration,
-				reference
-			});
-
-			return setTransferData({
-				bank_code: '',
-				account_number: '',
-				amount: '',
-				currency: '',
-				narration: '',
-				reference: ''
-			});
+			setAlert('account number is required', 'danger')
 		}
-	};
 
-	const getList = () => {
-		getData();
-	};
+		addData({
+			bank_code,
+			account_number,
+			amount,
+			currency,
+			narration,
+			reference,
+		})
 
-	const initTransfer = async () => {
+		toggle()
+
+		return setTransferData({
+			bank_code: '',
+			account_number: '',
+			amount: '',
+			currency: '',
+			narration: '',
+			reference: '',
+		})
+	}
+
+/* 	const initTransfer = async () => {
 		/* try {
 			getData();
 			console.log(datas)
@@ -89,42 +88,101 @@ const Transfer = ({ setAlert, addData, getData, buttonLabel, className }) => {
 		} catch (error) {
 			console.error(error);
 			setAlert('Transaction Failed');
-		} */
-	};
+		}
+	} */
 
 	return (
 		<Fragment>
-			<NavLink onClick={toggle}>Transfer</NavLink>
-			<Modal isOpen={modal} toggle={toggle} className={className}>
-				<ModalHeader toggle={toggle}>Modal title</ModalHeader>
+			<Button color='primary' onClick={toggle}>
+				ADD
+			</Button>
+			<Modal isOpen={modal} toggle={toggle} centered>
+				<ModalHeader toggle={toggle}>Bulk Transfer: Details</ModalHeader>
 				<ModalBody>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-					et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-					aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-					culpa qui officia deserunt mollit anim id est laborum.
+					<div className=' '>
+						<Form className='mt-5 p-5' onSubmit={onSubmit}>
+							<Input
+								type='text'
+								placeholder='Bank Code'
+								name='bank_code'
+								onChange={handleChange}
+								pattern='\d*'
+								maxLength='3'
+								className='mb-4 form-control-lg'
+								value={bank_code}
+							/>
+
+							<Input
+								type='text'
+								placeholder='Account Number'
+								name='account_number'
+								onChange={handleChange}
+								pattern='\d*'
+								maxLength='10'
+								className='mb-4 form-control-lg'
+								value={account_number}
+							/>
+
+							<div className='d-flex'>
+								<Input
+									type='text'
+									placeholder='Amount'
+									name='amount'
+									onChange={handleChange}
+									className='mb-4 mr-5 form-control-lg'
+									value={amount}
+								/>
+
+								<select
+									name='currency'
+									id='currency'
+									className='form-control-lg'
+									onChange={handleChange}>
+									<option value='' />
+									<option value='NGN'>NGN</option>
+									<option value='USD'>USD</option>
+								</select>
+							</div>
+
+							<Input
+								type='text'
+								placeholder='Narration'
+								name='narration'
+								onChange={handleChange}
+								className='mb-4 form-control-lg'
+								value={narration}
+							/>
+
+							<Input
+								type='text'
+								placeholder='Reference'
+								name='reference'
+								onChange={handleChange}
+								className='mb-4 form-control-lg'
+								value={reference}
+								hidden
+							/>
+						</Form>
+					</div>
 				</ModalBody>
 				<ModalFooter>
-					<Button color='primary' onClick={toggle}>
-						Do Something
-					</Button>{' '}
-					<Button color='secondary' onClick={toggle}>
-						Cancel
+					<Button color='primary' onClick={onSubmit}>
+						Submit
 					</Button>
 				</ModalFooter>
 			</Modal>
 		</Fragment>
-	);
-};
+	)
+}
 
 Transfer.propTypes = {
 	addData: PropTypes.func.isRequired,
 	setAlert: PropTypes.func.isRequired,
-	getData: PropTypes.func.isRequired
-};
+	getData: PropTypes.func.isRequired,
+}
 
 /* const mapStateToProps = (state) => ({
 	datas: state.data
 }); */
 
-export default connect(null, { addData, setAlert, getData })(Transfer);
+export default connect(null, { addData, setAlert, getData })(Transfer)

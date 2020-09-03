@@ -22,7 +22,9 @@ const transferSchema = new mongoose.Schema({
         type: String,
     },
     reference: {
-        type: String
+        type: String,
+        required: true,
+        unique: true
     },
     created_at: {
         type: Date,

@@ -44,6 +44,7 @@ const NavBar = ({ isAuthenticated, logout, userRole, isloading }) => {
 							{
 								!isloading &&
 								isAuthenticated &&
+								userRole !== null &&
 								userRole.role === 'admin' ? <NavLink href='/transfer'>Tranfer</NavLink> :
 								<NavLink>Github</NavLink>}
 						</NavItem>

@@ -1,11 +1,7 @@
 import React, { Fragment, useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import './assets/css/bootstrap.min.css'
-//import Home from './components/Home';
-import Login from './components/layouts/Login'
 import NavBar from './components/layouts/NavBar'
-import Register from './components/layouts/Register'
-//import Header from './components/Header';
 
 //redux
 import { Provider } from 'react-redux'
@@ -14,10 +10,13 @@ import Alert from './components/layouts/Alert'
 import Checkout from './components/payments/Checkout'
 import CarList from './components/cars/CarList'
 import CarDetails from './components/cars'
-import Transfer from './components/payments/Transfer'
 import { loadUser } from './actions/auth'
 import setAuthToken from './utils/setAuthToken'
 import { setAlert } from './actions/alert'
+
+import PrivateRoute from './utils/privateRoute.jsx'
+import TransferList from './components/payments/TransferList'
+import { getData } from './actions/data'
 
 if (localStorage.token) {
 	setAuthToken(localStorage.token)
@@ -28,6 +27,7 @@ if (localStorage.token) {
 const App = () => {
 	useEffect(() => {
 		store.dispatch(loadUser())
+		store.dispatch(getData())
 	}, [])
 
 	return (
@@ -43,7 +43,7 @@ const App = () => {
 					<Route path='/cars/:id' component={CarDetails} exact />
 					<Route path='/cars/rent/:id' component={Checkout} exact />
 
-					<Route path='/transfer' component={Transfer} exact />
+					<PrivateRoute path='/transfer' component={TransferList} exact />
 				</Switch>
 			</Router>
 		</Provider>

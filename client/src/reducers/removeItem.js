@@ -1,4 +1,4 @@
-import {
+/* import {
     DELETE
 } from '../actions/types';
 
@@ -16,4 +16,4 @@ export default function (state = initialState, action) {
         default:
             return state
     }
-}
+} */
