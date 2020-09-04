@@ -1,6 +1,6 @@
 import React from 'react';
 import Login from '../layouts/Login'
-import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Container, Col, Row, NavLink, Alert } from 'reactstrap';
+import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Container, Col, Row, Alert } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'

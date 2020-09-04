@@ -1,11 +1,13 @@
 import React from 'react';
-import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button, Container, Col, Row } from 'reactstrap';
+import Login from '../layouts/Login'
+import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Container, Col, Row, Alert } from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const CarDetails = ({ mycars, match }) => {
-	console.log(match);
+const CarDetails = ({ mycars, match, auth: {
+	isAuthenticated
+} }) => {
 	let selected = mycars.filter((item) => item.id === match.params.id);
 
 	const { title, img, price, luggage, doors, description, passenger, id } = selected[0];
@@ -41,10 +43,12 @@ const CarDetails = ({ mycars, match }) => {
 								<br />
 								<span className=''>{description}</span>
 							</CardText>
-							<Link className='btn btn-primary mr-5' color='primary' to={`/cars/rent/${id}`}>
+							{
+								isAuthenticated? <Link className='btn btn-primary mr-5' color='primary' to={`/cars/rent/${id}`}>
 								Rent Now
-							</Link>
-							<Link className='btn btn-outline-secondary' color='primary' to='/cars'>
+							</Link> : <Alert color="info" >Rent Now? <Login className="btn btn-info" /> </Alert>
+							}
+							<Link className='btn btn-outline-secondary' to='/cars'>
 								Back
 							</Link>
 						</CardBody>
@@ -56,11 +60,13 @@ const CarDetails = ({ mycars, match }) => {
 };
 
 CarDetails.propTypes = {
-	mycars: PropTypes.array.isRequired
+	mycars: PropTypes.array.isRequired,
+	auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-	mycars: state.carlist.cars
+	mycars: state.carlist.cars,
+	auth: state.auth
 });
 
 export default connect(mapStateToProps, null)(CarDetails);
